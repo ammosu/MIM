@@ -1,7 +1,10 @@
 package Graph;
 
+import java.io.Serializable;
 
-public class simpleVertex implements Vertex{
+
+public class simpleVertex implements Vertex, Serializable{
+	private static final long serialVersionUID = 1L;
 	private int ID = -1;
 	private double value = 0.0; 
 	

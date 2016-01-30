@@ -29,7 +29,7 @@ public class micModel {
 			this.time2ActNodes.put(time++, s);
 			activatedNodes.clear();
 			for(int v : newlyActivatedNodes)
-				if(g.containVertex(v)&&g.vertexInfo(v).wantRetweet())
+				if(g.containVertex(v)&&g.vertex(v).wantRetweet())
 					activatedNodes.add(v);
 			
 			newlyActivatedNodes = r.randNbrs(g, activatedNodes);
@@ -99,7 +99,7 @@ public class micModel {
 		loadGraph load = new loadGraph();
 		load.readData(graph, "Brightkite_edges.txt", 0, "\t");
 		load.wcProb(graph);
-		graph.setUniformRetweetAgainProb(0.9);
+		graph.setUniformShareProb(0.9);
 		
 		int[] seed = new int[] {29024, 16518, 35558, 34792, 33833, 8201, 1517, 10382, 33806, 23728, 35026, 84, 19380, 24310, 34295, 2106, 17114, 4698, 827, 16188};
 		Set<Integer> seedSet = new HashSet<Integer>();
@@ -121,7 +121,7 @@ public class micModel {
 			load.wcProb(graph);
 		else if(cascadeProb.toLowerCase().contains("un"))
 			load.uniformProb(graph, 0.3);
-		graph.setUniformRetweetAgainProb(retweetAgainProb);
+		graph.setUniformShareProb(retweetAgainProb);
 		
 		/////////////////////////////
 		System.out.println("This is greedy algorithm in MIC model.");

@@ -48,7 +48,7 @@ public class loadGraph {
 			fr = new FileReader(probData);
 			BufferedReader br = new BufferedReader(fr);
 			try {
-				for(mamVertex u : g.getAllmamVertex())
+				for(mamVertex u : g.getAllVertex())
 				{
 					for(int v : g.decends(u.getID()))
 					{
@@ -70,7 +70,7 @@ public class loadGraph {
 	
 	public void uniformProb(mimaGraph g, double p)
 	{
-		for(mamVertex u : g.getAllmamVertex())
+		for(mamVertex u : g.getAllVertex())
 		{
 			for(int v : g.decends(u.getID()))
 			{

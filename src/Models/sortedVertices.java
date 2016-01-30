@@ -1,4 +1,5 @@
 package Models;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -8,8 +9,8 @@ import Graph.Vertex;
 import Graph.simpleVertex;
 
 
-public class sortedVertices {
-
+public class sortedVertices implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private List<simpleVertex> list = new ArrayList<simpleVertex>();
 	private boolean isSorted = false;
 	

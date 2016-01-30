@@ -27,7 +27,7 @@ public class algs {
 			dist.put(v, Double.MAX_VALUE);
 		dist.put(start, 0.0);
 		parent.put(start, start);
-		queue.add(new simpleVertex(start, dist.get(start)));
+		queue.add(start, dist.get(start));
 		
 		while(queue.size()!=0)
 		{
@@ -46,7 +46,6 @@ public class algs {
 					queue.add(new simpleVertex(v, dist.get(minU) + graph.getEdgeProb(minU, v)));
 				}
 			}
-
 		}
 		return parent;
 	}

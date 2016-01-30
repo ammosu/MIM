@@ -1,5 +1,11 @@
 package Models;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.*;
 
 import Graph.Vertex;
@@ -57,7 +63,7 @@ public class IndepCascade {
 		return result;
 	}
 	
-	public int setSeedDiffusionResult(List<Vertex> seed, int m) // remember m-iteration seed activated results
+	public int setDiffusionResultOfSeed(List<Vertex> seed, int m) // remember m-iteration seed activated results
 	{
 		Random rand = new Random();
 		Set<Vertex> active = this.currentActive.get(m); // active nodes
@@ -83,14 +89,14 @@ public class IndepCascade {
 		return active.size();
 	}
 	
-	public double setSeedDiffusionResults(List<Vertex> seed, int iter) // clear results and remember iter-times precomputed results
+	public double setAllDiffusionResultOfSeed(List<Vertex> seed, int iter) // clear results and remember iter-times precomputed results
 	{
 		this.currentActive.clear();
 		double avg = 0.0;
 		for(int i = 0; i < iter; i++)
 		{
 			this.currentActive.add(new HashSet<Vertex>());
-			avg+=(double)this.setSeedDiffusionResult(seed, i);
+			avg+=(double)this.setDiffusionResultOfSeed(seed, i);
 		}
 		return avg/(double)iter;
 	}
@@ -168,7 +174,7 @@ public class IndepCascade {
 		
 		for(int i = 0; i < k ; i++)
 		{
-			this.setSeedDiffusionResults(seeds, this.MC);
+			this.setAllDiffusionResultOfSeed(seeds, this.MC);
 			for(Vertex v : this.graph.getAllVertex()) // put to celf
 			{
 				if(seeds.contains(v))
@@ -195,7 +201,7 @@ public class IndepCascade {
 		
 		for(int i = 0; i < k; i++)
 		{
-			double d = this.setSeedDiffusionResults(seeds, this.MC);
+			double d = this.setAllDiffusionResultOfSeed(seeds, this.MC);
 			if(i == 0)
 			{
 				for(Vertex v : this.graph.getAllVertex())
@@ -234,19 +240,60 @@ public class IndepCascade {
 		return seeds;
 	}
 	
+	public void objSerialize(String fileName, Object obj)
+	{
+		try {
+			FileOutputStream fs = new FileOutputStream(fileName);
+			ObjectOutputStream os = new ObjectOutputStream(fs);
+			os.writeObject(obj);
+			os.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void svDeserialize(String fileName)
+	{
+		try {
+			FileInputStream fis = new FileInputStream(fileName);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			try {
+				this.celfArray = (sortedVertices)ois.readObject();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+			ois.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void testIC()
 	{
 		loadGraph load = new loadGraph();
-		load.readData(this.graph, "hep.txt", 1, " ");
+		load.readData(this.graph, "Brightkite_edges.txt", 0, "\t");
 		load.wcProb(this.graph);
 		
 		/*
 		Greedy: [v2119=91.722, v6024=181.277, v37=231.742]
 		CELF: [v267=91.234, v6024=180.277, v37=233.544]  Time: 13.288sec.
+		
+		Brightkite 
+		MC:10, celf, [v6677=13452.2], Time: 1759.581sec.
+		MC:10, greedy, [v13361=14128.6], Time: 1692.73sec.
+		MC:1000, celf, [v8090=13274.741], Time: 146288.193sec.
 		*/
+		List<Vertex> list = new ArrayList<Vertex>();
+		list.add(new simpleVertex(1));
 		double startTime = System.currentTimeMillis();
 		//System.out.println(this.diffusionTimes(seed, 100));
-		this.celfAlg(3);
+		this.celfAlg(1);
+		this.objSerialize("celf", this.celfArray);
+		//this.greedyAlg(1);
 		double endTime = System.currentTimeMillis();
 		System.out.println("Time: " + (endTime-startTime)/1000 + "sec.");
 	}

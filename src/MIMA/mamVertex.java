@@ -8,10 +8,10 @@ import Graph.simpleVertex;
 
 
 public class mamVertex extends simpleVertex {
-
-	private List<Double> buyProb = new ArrayList<Double>(); //buy probability
-	private int total = 0;
-	private double retweetProb = 0.0;
+	private static final long serialVersionUID = 1L;
+	//private List<Double> buyProb = new ArrayList<Double>(); //buy probability
+	//private int numMessage = 0;
+	private double shareProb = 0.0;
 	private boolean isRetweeted = false;
 	
 	public mamVertex(int id)
@@ -22,22 +22,12 @@ public class mamVertex extends simpleVertex {
 	public mamVertex(int id, double prob)
 	{
 		super(id);
-		this.retweetProb = prob;
+		this.shareProb = prob;
 	}
 	
-	public void setTotalBuy(int num)
-	{
-		this.total = num;
-	}
-	public void buy()
-	{
-		this.total++;
-		this.isRetweeted = false;
-	}
-	public int getNumBuy()
-	{
-		return this.total;
-	}
+	
+	/*
+	
 	public void addBuyProb(double bp)
 	{
 		this.buyProb.add(bp);
@@ -57,11 +47,11 @@ public class mamVertex extends simpleVertex {
 		}
 		return false;
 	}
-	
+	*/
 	public boolean wantRetweet()
 	{
 		Random r = new Random();
-		if(!this.isRetweeted || r.nextDouble() <= this.retweetProb)
+		if(!this.isRetweeted || r.nextDouble() <= this.shareProb)
 		{
 			this.isRetweeted = true;
 			return true;
@@ -74,14 +64,14 @@ public class mamVertex extends simpleVertex {
 		this.isRetweeted = false;
 	}
 	
-	public void setRetweetProb(double p)
+	public void setShareProb(double p)
 	{
-		this.retweetProb = p;
+		this.shareProb = p;
 	}
 	
-	public double retweetProb()
+	public double shareProb()
 	{
-		return this.retweetProb;
+		return this.shareProb;
 	}
 	
 	

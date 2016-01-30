@@ -207,9 +207,11 @@ public class simpleGraph <E> implements Graph {
 		return this.Vertex.keySet();
 	}
 	
-	public Collection<E> getAllVertex()
+	public Set<E> getAllVertex()
 	{
-		return this.Vertex.values();
+		Set<E> set = new HashSet<E>();
+		set.addAll(this.Vertex.values());
+		return set;
 	}
 	
 	public int randomSeed()
