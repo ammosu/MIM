@@ -14,6 +14,7 @@ public class Main {
 		ic.setMC(1000);
 		
 		double startTime = System.currentTimeMillis();
+		ic.svDeserialize("celf"); // first seed propagation results
 		//this.celfAlg(1);
 		ic.greedyAlg(1);
 		double endTime = System.currentTimeMillis();

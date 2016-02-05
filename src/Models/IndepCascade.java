@@ -275,7 +275,7 @@ public class IndepCascade {
 	public void testIC()
 	{
 		loadGraph load = new loadGraph();
-		load.readData(this.graph, "Brightkite_edges.txt", 0, "\t");
+		load.readData(this.graph, "hep.txt", 1, " ");
 		load.wcProb(this.graph);
 		
 		/*
@@ -291,9 +291,11 @@ public class IndepCascade {
 		list.add(new simpleVertex(1));
 		double startTime = System.currentTimeMillis();
 		//System.out.println(this.diffusionTimes(seed, 100));
-		this.celfAlg(1);
-		this.objSerialize("celf", this.celfArray);
+		//this.celfAlg(1);
+		//this.objSerialize("celf", this.celfArray);
+		this.svDeserialize("celf");
 		//this.greedyAlg(1);
+		System.out.println(this.celfArray);
 		double endTime = System.currentTimeMillis();
 		System.out.println("Time: " + (endTime-startTime)/1000 + "sec.");
 	}

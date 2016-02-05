@@ -24,8 +24,11 @@ public class mamVertex extends simpleVertex {
 		super(id);
 		this.shareProb = prob;
 	}
-	
-	
+
+	public void acceptMessage()
+	{
+		super.setValue(super.getValue() + 1.0);
+	}
 	/*
 	
 	public void addBuyProb(double bp)

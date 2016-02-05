@@ -4,13 +4,16 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import Graph.Vertex;
 import Graph.loadGraph;
 import Graph.simpleVertex;
+import MIMA.mamVertex;
 import MIMA.mimaGraph;
 
 
 public class micModel {
 	private Map<Integer, Set<Integer>> time2ActNodes = new HashMap<Integer, Set<Integer>>(); //time t -> activated nodes of time t
+	private Map<Integer, mamVertex> v2AcceptFreq = new HashMap<Integer, mamVertex>();
 	private int MC = 1000; //default iteration
 	
 	public void micProcess(mimaGraph g, Set<Integer> seeds) // mic process record at time2ActNodes table
@@ -36,6 +39,12 @@ public class micModel {
 			
 		}
 		
+	}
+	public void plus()
+	{
+		this.v2AcceptFreq.put(1, new mamVertex(1, 0.0));
+		this.v2AcceptFreq.get(1).acceptMessage();
+		System.out.println(this.v2AcceptFreq.get(1));
 	}
 	
 	public int infSize() //influence size
